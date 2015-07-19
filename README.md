@@ -2,6 +2,8 @@
 
 Creating a loading animation is at its core always the same thing. This library helps you to set everything up for an entire group of AJAX triggers at once, whether it be buttons, links or anything clickable (other events coming soon).
 
+##Features
+
 - High flexibility
 - Non-invasive to DOM
 - Prevents accidental multiple submits
@@ -57,7 +59,7 @@ Notes:
 ### content
 content for the custom container
 
-**Default**: null,
+**Default**: null
 
 ### validate
 form validation, `f` points to the form
@@ -78,5 +80,5 @@ Destroys the object
 
 ##Copyright
 
-Released under the MIT License.
+Released under the [MIT License](http://opensource.org/licenses/MIT).
 

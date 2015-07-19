@@ -9,20 +9,31 @@ Creating a loading animation is at its core always the same thing. This library 
 - Understands form validation and pulls back if invalid
 - Supports all modern browsers
 
-How it works:
+##How it works:
 
-For loading animation within the trigger, a `.loading` class is added during the AJAX call:
+- For loading animation within the trigger, a `.loading` class is added during the AJAX call:
 
 `$('button').loadable();`
 
-Want a different classname? No problem.
+- Want a different classname? No problem.
 
 `$('button').loadable({toggleClass: 'myclass'});`
 
-You can change the button that way with CSS according to your needs (a sample is provided in jquery.loadable.css)
+*You can change the button that way with CSS according to your needs (a sample is provided in jquery.loadable.css)*
 
-For a custom loading animation with a separate container (CSS anims, different positions, etc.):
+- For a custom loading animation with a separate container (CSS anims, different positions, etc.):
 
 `$('button').loadable({container: ‘customload’, content: 'A huge hug while you wait…’}});`
 
 It's really that simple. Now you can finally focus on handling the calls right instead of adding animations all the time.
+
+##Options:
+
+`{  
+    toggleClass: 	'',			        // string, trigger's class while loading
+    flagClass:		'',			        // a class name for the internal mechanism
+		container:		'',					    // a class name for the custom container if needed
+		position: 		'parent', 			// parent || this (only with paired tags)
+		content: 			null, 					// a content for the container
+		validate:			function (f) {} // form validation
+}`

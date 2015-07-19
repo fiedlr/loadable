@@ -1,7 +1,7 @@
 # loadable
 A tiny library for setting up multiple AJAX loading animations
 
-* Creating a loading animation is at its core always the same thing. This library helps you to set everything up for an entire group of AJAX triggers at once, whether it be buttons, links or anything clickable (other events coming soon). *
+Creating a loading animation is at its core always the same thing. This library helps you to set everything up for an entire group of AJAX triggers at once, whether it be buttons, links or anything clickable (other events coming soon).
 
 - High flexibility
 - Non-invasive to DOM

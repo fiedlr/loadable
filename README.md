@@ -9,7 +9,7 @@ Creating a loading animation is at its core always the same thing. This library 
 - Understands form validation and pulls back if invalid
 - Supports all modern browsers
 
-##How it works:
+##How it works
 
 - For loading animation within the trigger, a `.loading` class is added during the AJAX call:
 
@@ -23,17 +23,60 @@ Creating a loading animation is at its core always the same thing. This library 
 
 - For a custom loading animation with a separate container (CSS anims, different positions, etc.):
 
-`$('button').loadable({container: ‘customload’, content: 'A huge hug while you wait…’}});`
+`$('button').loadable({container: ‘customload’, content: 'A huge hug while you wait…’});`
 
 It's really that simple. Now you can finally focus on handling the calls right instead of adding animations all the time.
 
-##Options:
+##Options
 
-`{  
-    toggleClass: 	'',			        // string, trigger's class while loading
-    flagClass:		'',			        // a class name for the internal mechanism
-		container:		'',					    // a class name for the custom container if needed
-		position: 		'parent', 			// parent || this (only with paired tags)
-		content: 			null, 					// a content for the container
-		validate:			function (f) {} // form validation
-}`
+### toggleClass
+trigger's class while loading
+
+**Default**: 'loading'
+
+### flagClass 
+a class name for the internal mechanism
+
+**Default**: 'loadable'
+
+### container
+a class name for the custom container if needed
+
+**Default**: false
+
+### position
+position relative to the trigger
+
+**Default**: 'parent' (parent || this (only with paired tags))
+
+Notes:
+> - Has no effect if container isn't set
+
+> - Please, don't use the 'this' option on non-paired tags
+
+### content
+content for the custom container
+
+**Default**: null,
+
+### validate
+form validation, `f` points to the form
+
+**Default**: function (f) {...}
+
+
+Note:
+> By default, this plugin supports jQuery Validate and HTML5 validation. 
+
+## Methods
+
+### refresh
+Refreshes custom containers when DOM changed
+
+### destroy
+Destroys the object
+
+##Copyright
+
+Released under the MIT License.
+

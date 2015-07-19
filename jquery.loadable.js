@@ -1,6 +1,4 @@
-/*! loadable v0.9.0 <www.github.com/fiedlr/loadable> 
-	Copyright (c) 2015 Adam Fiedler
-	Released under the MIT License <www.mit-license.org> */
+/*! loadable v0.9.0 <github.com/fiedlr/loadable> | (c) 2015 Adam Fiedler <mit-license.org> */
 ;(function ($) {
 
 	// Options

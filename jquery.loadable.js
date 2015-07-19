@@ -1,4 +1,4 @@
-/*! loadable v0.9.0 <github.com/fiedlr/loadable> | (c) 2015 Adam Fiedler <mit-license.org> */
+/*! loadable v0.9.0 <github.com/fiedlr/loadable> | (c) 2015 Adam Fiedler | <opensource.org/licenses/MIT> */
 ;(function ($) {
 
 	// Options

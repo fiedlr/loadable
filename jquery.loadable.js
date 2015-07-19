@@ -1,28 +1,28 @@
 /*! loadable v0.9.0 <www.github.com/fiedlr/loadable> 
-		Copyright (c) 2015 Adam Fiedler
-		Released under the MIT License <www.mit-license.org> */
+	Copyright (c) 2015 Adam Fiedler
+	Released under the MIT License <www.mit-license.org> */
 ;(function ($) {
 
 	// Options
 	var opts = {},
-			defaults = { 
-				toggleClass: 	'loading',			// trigger's class while loading
-				flagClass:		'loadable',			// raised flag before AJAX request
-				container:		false,					// custom loader's class
-				position: 		'parent', 			// custom loader's position (parent || this)
-				content: 			null, 					// custom loader's content
-				validate:			function (f) {	// form validation
-					if (typeof jQuery.fn.validate == 'function')
-						return f.valid();
-					else {
-						for (i = 0; i < f[0].elements.length; i++) {
-							var field = f[0].elements[i];
-							if ((field.nodeName == 'INPUT' || field.nodeName == 'TEXTAREA') && !field.checkValidity())
-							return false;
+		defaults = { 
+			toggleClass: 	'loading',	// trigger's class while loading
+			flagClass:	'loadable',	// raised flag before AJAX request
+			container:	false,		// custom loader's class
+			position: 	'parent', 	// custom loader's position (parent || this)
+			content: 	null, 		// custom loader's content
+			validate:	function (f) {	// form validation
+						if (typeof jQuery.fn.validate == 'function')
+							return f.valid();
+						else {
+							for (i = 0; i < f[0].elements.length; i++) {
+								var field = f[0].elements[i];
+								if ((field.nodeName == 'INPUT' || field.nodeName == 'TEXTAREA') && !field.checkValidity())
+								return false;
+							}
 						}
+						return true;
 					}
-					return true;
-				}
 			};
 			
 	// Methods	

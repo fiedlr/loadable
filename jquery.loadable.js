@@ -92,12 +92,12 @@
 	// Access
 	$.fn.loadable = function (options) {
 		
-		if ( methods[options] ) {
+		if (methods[options]) {
 			// Calling a method
-			return methods[ options ].apply( this, Array.prototype.slice.call( arguments, 1 ));
-		} else if ( typeof options === 'object' || !options ) {
+			return methods[options].apply(this, Array.prototype.slice.call(arguments, 1));
+		} else if (typeof options === 'object' || !options) {
 			// Constructor
-			return methods.init.apply( this, arguments );
+			return methods.init.apply(this, arguments);
 		} else {
 			// Error
 			$.error(options + ' needs to be an object or a method.');

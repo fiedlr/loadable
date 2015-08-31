@@ -1,0 +1,28 @@
+{
+  "name": "loadable",
+  "version": "0.9.1",
+  "description": "A tiny jQuery plugin for a one-time setup of AJAX loading animations.",
+  "main": [
+    "jquery.loadable.js",
+    "jquery.loadable.css"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/fiedlr/loadable",
+  "keywords": [
+    "jquery",
+    "plugin",
+    "loading",
+    "animations",
+    "ajax",
+    "wheel"
+  ],
+  "dependencies": {
+    "jquery": "~1.11 || ~2.1"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test"
+  ]
+}

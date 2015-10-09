@@ -1,26 +1,25 @@
-/*! loadable v0.9.1 <github.com/fiedlr/loadable> | (c) 2015 Adam Fiedler | <opensource.org/licenses/MIT> */
+/*! loadable v1.0.0 <github.com/fiedlr/loadable> | (c) 2015 Adam Fiedler | <opensource.org/licenses/MIT> */
 ;(function ($) {
 
 	// Options
-	var opts = {},
+	var opts = {instances: 0},
 		defaults = { 
 			toggleClass: 	'loading',	// trigger's class while loading
-			flagClass:	'loadable',	// raised flag before AJAX request
-			container:	false,		// custom loader's class
-			position: 	'parent', 	// custom loader's position (parent || this)
-			content: 	null, 		// custom loader's content
-			validate:	function (f) {	// form validation
-						if (typeof jQuery.fn.validate == 'function')
-							return f.valid();
-						else {
-							for (i = 0; i < f[0].elements.length; i++) {
-								var field = f[0].elements[i];
-								if ((field.nodeName == 'INPUT' || field.nodeName == 'TEXTAREA') && !field.checkValidity())
-								return false;
-							}
+			position: 		'parent', 	// custom loader's position (parent || this)
+			container: 		false,		// custom loader's class
+			content: 		null, 		// custom loader's content
+			validate: 		function (f) {	// form validation
+					if (typeof jQuery.fn.validate == 'function')
+						return f.valid();
+					else {
+						for (i = 0; i < f[0].elements.length; i++) {
+							var field = f[0].elements[i];
+							if ((field.nodeName == 'INPUT' || field.nodeName == 'TEXTAREA') && !field.checkValidity())
+							return false;
 						}
-						return true;
 					}
+					return true;
+				}
 			};
 			
 	// Methods	
@@ -29,19 +28,102 @@
 		init: function (options) {
 
 			// Setup
-			$.extend(opts, defaults, options);
-			var pos = (opts.position === 'this' ? this : this.parent());
+			options = $.extend({}, defaults, options);  
+
+			// Make an instance if doesn't exist already
+			if (typeof opts[options.toggleClass] !== 'undefined') {
+
+				options.toggleClass += opts.instances;
+
+			}
+
+			// Save this setup
+			opts[options.toggleClass] = options;
+
+			// Assign a pointer
+			this.data('toggleClass', options.toggleClass)
+			// Add a custom container
+			.loadable('refresh', options.position === 'this' ? this : this.parent());
+	
+			// Call handler
+			if (!opts.instances) {
+				$(document).bind('ajaxSend.loadable', function (e, xhr, settings) {
+
+					console.log('binder');
+					
+					// Get trigger and add it the loading class
+					settings.loadingTrigger = $('.loadable:first').addClass(function () {
+						var toggleClass = $(this).data('toggleClass'); 
+						// Show the custom loader if any
+						$('span.'+opts[toggleClass].container, opts[toggleClass].position === 'this' ? $(this) : $(this).parent()).show();
+						// Add the toggleClass
+						return toggleClass; 
+					}).removeClass('loadable');
+				
+				}).bind('ajaxComplete.loadable', function (e, xhr, settings) {
+
+					console.log('binder end'); 
+
+					// Set the trigger to the original state
+					settings.loadingTrigger.removeClass(function () {
+						var toggleClass = $(this).data('toggleClass');
+						// Hide the custom loader if any
+						$('span.'+opts[toggleClass].container, opts[toggleClass].position === 'this' ? $(this) : $(this).parent()).hide();
+						// Remove toggleClass
+						return toggleClass;
+					}).removeAttr('disabled');
+				
+				});
+			}
+
+			// Increment the number of instances
+			opts.instances++;
+
+			return this;
 			
-			// Refresh custom containers
-			methods.refresh(pos);
+		},
 		
-			// React to clicks
-			this.click(function () {
-		
+		refresh: function (pos) {
+
+			var selector = this.selector;
+
+			// Refresh toggleClasses
+			this.each(function () {
+				if (!$(this).data('toggleClass')) {
+				
+					$(this).data('toggleClass', $(selector).filter(':first').data('toggleClass'));
+
+				}
+			});
+
+			var toggleClass = $(this).data('toggleClass');
+
+			// Save toggleClass information to load for AJAX handlers to be visible
+			if ((typeof toggleClass === 'undefined' || typeof opts[toggleClass] === 'undefined')) {
+
+				if (this.length) {
+					console.log('loadable: Needs to initialize.');
+					return;
+				}
+
+			// Add a custom container if needed
+			} else if (opts[toggleClass].container !== false && !$('span.'+opts[toggleClass].container, pos).length) {
+
+				// Add custom container
+				$('<span />').addClass(opts[toggleClass].container).html(opts[toggleClass].content).hide().appendTo(pos);
+				
+			}
+
+			// remove duplicites somehow
+			$(this).on('click.loadable', function () {
+
+				console.log('loadable click');
+	
 				var f = $(this).closest('form');
-				if (!f.length || opts.validate(f)) {
+				
+				if (!f.length || opts[toggleClass].validate(f)) {
 					// Raise a flag
-					$(this).attr('disabled', true).addClass(opts.flagClass);
+					$(this).attr('disabled', true).addClass('loadable');
 					// Submit if form and valid
 					if (f.length) {
 						f.submit();
@@ -49,29 +131,6 @@
 				}
 			
 			});
-			
-			// Handle AJAX calls
-			$(document).bind('ajaxSend', function (e, xhr, settings) {
-				
-				settings.loadingTrigger = $('.'+opts.flagClass+':first').removeClass(opts.flagClass).addClass(opts.toggleClass);
-				$('span.'+opts.container, settings.loadingTrigger.parent()).show();
-				
-			}).bind('ajaxComplete', function (e, xhr, settings) { 
-						
-				$('span.'+opts.container, settings.loadingTrigger.parent()).hide();
-				settings.loadingTrigger.removeClass(opts.toggleClass).removeAttr('disabled');
-			
-			});
-	
-			// Chaining
-			return this;
-			
-		},
-		
-		refresh: function (pos) {
-			
-			if (opts.container !== false && !$('.'+opts.container, pos).length) 
-			$('<span />').addClass(opts.container).html(opts.content).appendTo(pos);
 		
 			return this;
 			
@@ -80,8 +139,12 @@
 		// Turn off the trigger, remove all classes and custom loaders
 		destroy: function () { 
 			
-			this.off('click').removeClass(opts.toggleClass).removeClass(opts.flagClass).removeAttr('disabled');
-			$('span.'+opts.container).remove();
+			// Remove custom containers
+			this.each(function () {
+				$('span.'+opts[$(this).data('toggleClass')].container).remove();
+			})
+			// Remove all triggers and classes tied with the plugin
+			.off('click.loadable').removeAttr('disabled').removeClass('loadable').data('toggleClass', '');
 			
 			return this;
 			
@@ -93,14 +156,17 @@
 	$.fn.loadable = function (options) {
 		
 		if (methods[options]) {
-			// Calling a method
+
 			return methods[options].apply(this, Array.prototype.slice.call(arguments, 1));
+
 		} else if (typeof options === 'object' || !options) {
-			// Constructor
+
 			return methods.init.apply(this, arguments);
+
 		} else {
-			// Error
-			$.error(options + ' needs to be an object or a method.');
+
+			console.log('loadable:' + options + ' needs to be an object or a method.');
+
 		}    		
 		
 	}

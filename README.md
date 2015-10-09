@@ -1,13 +1,13 @@
 # loadable
 
-Creating a loading animation is at its core always the same thing. This library helps you to set everything up for an entire group of AJAX triggers at once, whether it be buttons, links or anything clickable (other events coming soon).
+Creating a loading animation is at its core always the same thing. This library helps you set everything up for an entire group of AJAX triggers at once, whether it be buttons, links or anything clickable (other events coming soon).
 
 ##Features
 
 - High flexibility
 - Non-invasive to DOM
 - Prevents accidental multiple submits
-- Triggered automatically in <form> sent with ENTER
+- Triggered automatically in forms sent with ENTER
 - Understands form validation and pulls back if invalid
 - Supports all modern browsers
 
@@ -21,7 +21,7 @@ Creating a loading animation is at its core always the same thing. This library 
 
 `$('button').loadable({toggleClass: 'myclass'});`
 
-*You can change the button that way with CSS according to your needs (a sample is provided in jquery.loadable.css)*
+> You can change the loading button's behavior that way with CSS according to your needs (a sample is provided in jquery.loadable.css). Multiple instances require different toggleClasses to preserve configs, that's why the plugin automatically increments the desired toggleClass in case it isn't unique.
 
 - For a custom loading animation with a separate container (CSS anims, different positions, etc.):
 
@@ -32,14 +32,9 @@ It's really that simple. Now you can finally focus on handling the calls right i
 ##Options
 
 ### toggleClass
-trigger's class while loading
+the trigger's class to be set while loading
 
 **Default**: 'loading'
-
-### flagClass 
-a class name for the internal mechanism
-
-**Default**: 'loadable'
 
 ### container
 a class name for the custom container if needed
@@ -47,14 +42,14 @@ a class name for the custom container if needed
 **Default**: false
 
 ### position
-position relative to the trigger
+the custom loading container's position relative to the trigger
 
 **Default**: 'parent' (parent || this (only with paired tags))
 
-Notes:
+Note:
 > - Has no effect if container isn't set
 
-> - Please, don't use the 'this' option on non-paired tags
+> - Please, don't use the 'this' option on unpaired tags
 
 ### content
 content for the custom container
@@ -73,7 +68,12 @@ Note:
 ## Methods
 
 ### refresh
-Refreshes custom containers when DOM changed
+Refreshes custom containers and dynamic triggers
+
+**Args:** Takes a jQuery object to know which dynamic container is to be refreshed
+
+Note:
+> Use refresh only on triggers with the same toggleClass.
 
 ### destroy
 Destroys the object

@@ -1,4 +1,4 @@
-/*! loadable v1.0.0 <github.com/fiedlr/loadable> | (c) 2015 Adam Fiedler | <opensource.org/licenses/MIT> */
+/*! loadable v1.0.1 <github.com/fiedlr/loadable> | (c) 2015 Adam Fiedler | @license <opensource.org/licenses/MIT> */
 ;(function ($) {
 
 	// Options
@@ -9,13 +9,14 @@
 			container: 		false,		// custom loader's class
 			content: 		null, 		// custom loader's content
 			validate: 		function (f) {	// form validation
-					if (typeof jQuery.fn.validate == 'function')
+					if (typeof jQuery.fn.validate === 'function') {
 						return f.valid();
-					else {
-						for (i = 0; i < f[0].elements.length; i++) {
+					} else {
+						for (var i = 0; i < f[0].elements.length; i++) {
 							var field = f[0].elements[i];
-							if ((field.nodeName == 'INPUT' || field.nodeName == 'TEXTAREA') && !field.checkValidity())
-							return false;
+							if ((field.nodeName === 'INPUT' || field.nodeName === 'TEXTAREA') && !field.checkValidity()) {
+								return false;
+							}
 						}
 					}
 					return true;
@@ -48,8 +49,6 @@
 			// Call handler
 			if (!opts.instances) {
 				$(document).bind('ajaxSend.loadable', function (e, xhr, settings) {
-
-					console.log('binder');
 					
 					// Get trigger and add it the loading class
 					settings.loadingTrigger = $('.loadable:first').addClass(function () {
@@ -61,8 +60,6 @@
 					}).removeClass('loadable');
 				
 				}).bind('ajaxComplete.loadable', function (e, xhr, settings) {
-
-					console.log('binder end'); 
 
 					// Set the trigger to the original state
 					settings.loadingTrigger.removeClass(function () {
@@ -102,7 +99,7 @@
 			if ((typeof toggleClass === 'undefined' || typeof opts[toggleClass] === 'undefined')) {
 
 				if (this.length) {
-					console.log('loadable: Needs to initialize.');
+					$.error('loadable: Needs to initialize.');
 					return;
 				}
 
@@ -116,8 +113,6 @@
 
 			// remove duplicites somehow
 			$(this).on('click.loadable', function () {
-
-				console.log('loadable click');
 	
 				var f = $(this).closest('form');
 				
@@ -165,10 +160,10 @@
 
 		} else {
 
-			console.log('loadable:' + options + ' needs to be an object or a method.');
+			$.error('loadable:' + options + ' needs to be an object or a method.');
 
 		}    		
 		
-	}
+	};
 
 }(jQuery));

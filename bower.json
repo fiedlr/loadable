@@ -1,6 +1,6 @@
 {
   "name": "loadable",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A tiny jQuery plugin for a one-time setup of AJAX loading animations.",
   "main": [
     "jquery.loadable.js",

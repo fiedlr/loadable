@@ -2,7 +2,7 @@
   "name": "loadable",
   "version": "1.0.1",
   "description": "A tiny jQuery plugin for a one-time setup of AJAX loading animations.",
-  "authors": ["Adam Fiedler <info@fiedlr.io>"],
+  "author": "Adam Fiedler <info@fiedlr.io>",
   "license": "MIT",
   "homepage": "https://github.com/fiedlr/loadable",
   "keywords": [
@@ -13,17 +13,15 @@
     "ajax",
     "wheel"
   ],
-  "main": [
-    "dist/jquery.loadable.js",
-    "dist/jquery.loadable.css"
-  ],
-  "dependencies": {
-    "jquery": "~1.11 || ~2.1"
+  "files": ["dist"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fiedlr/loadable.git"
   },
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "test"
-  ],
+  "bugs": {
+    "url": "https://github.com/fiedlr/loadable/issues"
+  },
+  "dependencies": {
+    "jquery": "~1.11 || ~2.1",
+  }
 }
